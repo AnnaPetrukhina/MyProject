@@ -239,3 +239,12 @@ if answer == "yes":
 # Им всем вместе так же надо прожить 365 дней.
 
 # (Можно определить критическое количество котов, которое может прокормить человек...)
+answer = input("Хотите увидеть как живет один человек с случайным числом котов? Введите yes, если хотите. >>> ")
+if answer == "yes":
+    year_with_few_cats(inhabitants=citizens, citizens_cats=[], range_count_cat=15)
+
+citizens.append(Man(name="Батхед"))
+citizens.append(Man(name="Пушкин"))
+answer = input("Хотите увидеть как живет несколько человек с случайным числом котов? Введите yes, если хотите. >>> ")
+if answer == "yes":
+    year_with_few_cats(inhabitants=citizens, citizens_cats=[], range_count_cat=4)
