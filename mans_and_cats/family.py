@@ -494,31 +494,31 @@ class Child(Man):
             cprint(f'{self.name} спал целый день', color='green')
 
 
-home = House()
-serge = Husband(name='Сережа')
-serge.go_to_the_house(house=home)
-masha = Wife(name='Маша')
-masha.go_to_the_house(house=home)
-
-kolya = Child(name='Коля')
-kolya.go_to_the_house(house=home)
-
-for day in range(366):
-    cprint(f'\n================== День {day} ==================', color='green')
-    serge.act()
-    masha.act()
-    kolya.act()
-    home.end_day()
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(kolya, color='cyan')
-    cprint(f"\n{home}", color='cyan')
-    if serge.state == "dead" or masha.state == "dead":
-        break
-
-print(f"\nЗа год заработано дене {serge.money_earned}, "
-      f"съедено еды {serge.food_eaten + masha.food_eaten + kolya.food_eaten}, "
-      f"куплено шуб {masha.count_coat}")
+# home = House()
+# serge = Husband(name='Сережа')
+# serge.go_to_the_house(house=home)
+# masha = Wife(name='Маша')
+# masha.go_to_the_house(house=home)
+#
+# kolya = Child(name='Коля')
+# kolya.go_to_the_house(house=home)
+#
+# for day in range(366):
+#     cprint(f'\n================== День {day} ==================', color='green')
+#     serge.act()
+#     masha.act()
+#     kolya.act()
+#     home.end_day()
+#     cprint(serge, color='cyan')
+#     cprint(masha, color='cyan')
+#     cprint(kolya, color='cyan')
+#     cprint(f"\n{home}", color='cyan')
+#     if serge.state == "dead" or masha.state == "dead":
+#         break
+#
+# print(f"\nЗа год заработано дене {serge.money_earned}, "
+#       f"съедено еды {serge.food_eaten + masha.food_eaten + kolya.food_eaten}, "
+#       f"куплено шуб {masha.count_coat}")
 
 # Часть третья
 #
@@ -526,6 +526,51 @@ print(f"\nЗа год заработано дене {serge.money_earned}, "
 # влить в мастер все коммиты из ветки develop и разрешить все конфликты
 # отправить на проверку учителем.
 
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+kolya = Child(name='Коля')
+
+
+if __name__ == "__main__":
+    home = House()
+    serge = Husband(name='Сережа')
+    serge.go_to_the_house(house=home)
+    masha = Wife(name='Маша')
+    masha.go_to_the_house(house=home)
+    kolya = Child(name='Коля')
+    kolya.go_to_the_house(house=home)
+    count_cat = 3
+    cats = kittens(count=count_cat)
+    for kitty_cat in cats:
+        masha.get_cat(kitty=kitty_cat)
+        serge.get_cat(kitty=kitty_cat)
+    for day in range(366):
+        cprint(f'\n================== День {day} ==================', color='grey')
+        serge.act()
+        masha.act()
+        kolya.act()
+        for kitty_cat in cats:
+            kitty_cat.act()
+        cprint(serge, color='cyan')
+        cprint(masha, color='cyan')
+        cprint(kolya, color='cyan')
+        for kitty_cat in cats:
+            cprint(kitty_cat, color="cyan")
+        cprint(f"\n{home}", color='cyan')
+        if serge.state == "dead" or masha.state == "dead" or kolya.state == "dead":
+            break
+
+    cat_ate = 0
+    how_many_times_was_the_Wallpaper_stripped = 0
+    for kitty_cat in cats:
+        cat_ate += kitty_cat.food_cat_eaten
+        how_many_times_was_the_Wallpaper_stripped += kitty_cat.count_soil
+
+    print(f"\nЗа год заработано денег {serge.money_earned}, "
+          f"съедено еды {serge.food_eaten + masha.food_eaten + kolya.food_eaten}, "
+          f"куплено шуб {masha.count_coat}, съедено кошачьей еды {cat_ate}, "
+          f"{how_many_times_was_the_Wallpaper_stripped} раз были ободроны обои.")
 
 # Усложненное задание (делать по желанию)
 #
