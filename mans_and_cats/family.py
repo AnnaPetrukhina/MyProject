@@ -412,44 +412,44 @@ def kittens(count):
     return kitties
 
 
-home = House()
-serge = Husband(name='Сережа')
-serge.go_to_the_house(house=home)
-masha = Wife(name='Маша')
-masha.go_to_the_house(house=home)
-
-
-count_cat = 3
-cats = kittens(count=count_cat)
-for kitty_cat in cats:
-    masha.get_cat(kitty=kitty_cat)
-    serge.get_cat(kitty=kitty_cat)
-
-
-for day in range(1, 366):
-    cprint(f'\n================== День {day} ==================', color='green')
-    serge.act()
-    masha.act()
-    for kitty_cat in cats:
-        kitty_cat.act()
-    home.end_day()
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    for kitty_cat in cats:
-        cprint(kitty_cat, color="cyan")
-    cprint(f"\n{home}", color='cyan')
-    if serge.state == "dead" or masha.state == "dead":
-        break
-
-cat_ate = 0
-how_many_times_was_the_Wallpaper_stripped = 0
-for kitty_cat in cats:
-    cat_ate += kitty_cat.food_cat_eaten
-    how_many_times_was_the_Wallpaper_stripped += kitty_cat.count_soil
-
-print(f"\nЗа год заработано денег {serge.money_earned}, съедено еды {serge.food_eaten + masha.food_eaten}, "
-      f"куплено шуб {masha.count_coat}, съедено кошачьей еды {cat_ate}, "
-      f"{how_many_times_was_the_Wallpaper_stripped} раз были ободроны обои.")
+# home = House()
+# serge = Husband(name='Сережа')
+# serge.go_to_the_house(house=home)
+# masha = Wife(name='Маша')
+# masha.go_to_the_house(house=home)
+#
+#
+# count_cat = 3
+# cats = kittens(count=count_cat)
+# for kitty_cat in cats:
+#     masha.get_cat(kitty=kitty_cat)
+#     serge.get_cat(kitty=kitty_cat)
+#
+#
+# for day in range(1, 366):
+#     cprint(f'\n================== День {day} ==================', color='green')
+#     serge.act()
+#     masha.act()
+#     for kitty_cat in cats:
+#         kitty_cat.act()
+#     home.end_day()
+#     cprint(serge, color='cyan')
+#     cprint(masha, color='cyan')
+#     for kitty_cat in cats:
+#         cprint(kitty_cat, color="cyan")
+#     cprint(f"\n{home}", color='cyan')
+#     if serge.state == "dead" or masha.state == "dead":
+#         break
+#
+# cat_ate = 0
+# how_many_times_was_the_Wallpaper_stripped = 0
+# for kitty_cat in cats:
+#     cat_ate += kitty_cat.food_cat_eaten
+#     how_many_times_was_the_Wallpaper_stripped += kitty_cat.count_soil
+#
+# print(f"\nЗа год заработано денег {serge.money_earned}, съедено еды {serge.food_eaten + masha.food_eaten}, "
+#       f"куплено шуб {masha.count_coat}, съедено кошачьей еды {cat_ate}, "
+#       f"{how_many_times_was_the_Wallpaper_stripped} раз были ободроны обои.")
 
 # Часть вторая бис
 #
@@ -462,6 +462,63 @@ print(f"\nЗа год заработано денег {serge.money_earned}, съ
 # отличия от взрослых - кушает максимум 10 единиц еды,
 # степень счастья  - не меняется, всегда ==100 ;)
 
+class Child(Man):
+
+    def act(self):
+        if super().act():
+            dice = randint(1, 6)
+            if self.fullness <= 10:
+                self.eat()
+            elif dice % 2 == 0:
+                self.sleep()
+            elif dice % 2 != 0:
+                self.eat()
+
+    def eat(self):
+        if self.house.food >= 10:
+            self.fullness += 10
+            self.house.food -= 10
+            Man.food_eaten += 10
+            if __name__ == "__main__":
+                cprint(f'{self.name} поел', color='yellow')
+        elif __name__ == "__main__":
+            cprint(f'{self.name} нет еды', color='red')
+            return False
+        else:
+            return False
+        return True
+
+    def sleep(self):
+        self.fullness -= 10
+        if __name__ == "__main__":
+            cprint(f'{self.name} спал целый день', color='green')
+
+
+home = House()
+serge = Husband(name='Сережа')
+serge.go_to_the_house(house=home)
+masha = Wife(name='Маша')
+masha.go_to_the_house(house=home)
+
+kolya = Child(name='Коля')
+kolya.go_to_the_house(house=home)
+
+for day in range(366):
+    cprint(f'\n================== День {day} ==================', color='green')
+    serge.act()
+    masha.act()
+    kolya.act()
+    home.end_day()
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(kolya, color='cyan')
+    cprint(f"\n{home}", color='cyan')
+    if serge.state == "dead" or masha.state == "dead":
+        break
+
+print(f"\nЗа год заработано дене {serge.money_earned}, "
+      f"съедено еды {serge.food_eaten + masha.food_eaten + kolya.food_eaten}, "
+      f"куплено шуб {masha.count_coat}")
 
 # Часть третья
 #
