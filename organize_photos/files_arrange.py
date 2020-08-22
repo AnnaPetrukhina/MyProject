@@ -36,8 +36,9 @@
 import os
 import shutil
 import time
+import zipfile
 from abc import ABC, abstractmethod
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 
 class SortingByYear(ABC):
@@ -74,10 +75,38 @@ class SortingByYearFolder(SortingByYear):
                 shutil.copy2(file_path, destination, follow_symlinks=True)
 
 
+class SortingByYearZip(SortingByYear):
+
+    def __init__(self, path_destination_folder, file_name):
+        super().__init__(path_destination_folder)
+        self.file_name = file_name
+
+    def sort(self):
+        with zipfile.ZipFile(self.file_name, "r") as zip_file:
+            for info in zip_file.infolist():
+                if info.file_size != 0:
+                    time_file = info.date_time
+                    year_file = time_file[0]
+                    month_file = time_file[1]
+                    new_path = os.path.join(self.path_destination_folder, str(year_file), str(month_file))
+                    new_path = os.path.normpath(new_path)
+                    if new_path not in self.folder_year_month:
+                        os.makedirs(new_path)
+                    self.folder_year_month.add(f"{new_path}")
+                    name = PurePosixPath(info.filename).name
+                    destination = os.path.join(new_path, name)
+                    with zip_file.open(info.filename, "r") as src, open(destination, "wb") as dst:
+                        shutil.copyfileobj(src, dst)
+
+
 path = Path.cwd()/"icons"
 target_folder = Path.cwd()/"icons_by_year_folder"
+file_name_zip = "icons.zip"
+target_folder_zip = Path.cwd()/"icons_by_year_zip"
 sorting_folder = SortingByYearFolder(target_folder, path)
+sorting_folder_zip = SortingByYearZip(target_folder_zip, file_name_zip)
 sorting_folder.sort()
+sorting_folder_zip.sort()
 
 
 # Усложненное задание (делать по желанию)
