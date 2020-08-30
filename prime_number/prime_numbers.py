@@ -47,9 +47,9 @@ class PrimeNumbers:
             raise StopIteration()
 
 
-prime_number_iterator = PrimeNumbers(n=10000)
-for number in prime_number_iterator:
-    print(number)
+# prime_number_iterator = PrimeNumbers(n=10000)
+# for number in prime_number_iterator:
+#     print(number)
 
 
 #  после подтверждения части 1 преподователем, можно делать
@@ -57,7 +57,25 @@ for number in prime_number_iterator:
 # Часть 2
 # Теперь нужно создать генератор, который выдает последовательность простых чисел до n
 # Распечатать все простые числа до 10000 в столбик
+def check(i, prime_num):
+    for prime in prime_num:
+        if i % prime == 0:
+            return False
+    return True
 
+
+def prime_numbers_generator(count_number):
+    prime_numbers = []
+    i = 1
+    while i < count_number:
+        i += 1
+        if check(i, prime_numbers):
+            prime_numbers.append(i)
+            yield i
+
+
+for number in prime_numbers_generator(count_number=10000):
+    print(number)
 
 # Часть 3
 # Написать несколько функций-фильтров, которые выдает True, если число:
