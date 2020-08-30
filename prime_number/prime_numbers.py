@@ -74,8 +74,8 @@ def prime_numbers_generator(count_number):
             yield i
 
 
-for number in prime_numbers_generator(count_number=10000):
-    print(number)
+# for number in prime_numbers_generator(count_number=10000):
+#     print(number)
 
 # Часть 3
 # Написать несколько функций-фильтров, которые выдает True, если число:
@@ -92,3 +92,123 @@ for number in prime_numbers_generator(count_number=10000):
 # простых счастливых палиндромных чисел и так далее. Придумать не менее 2х способов.
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
+
+def lucky_number(num):
+    num = str(num)
+    center = len(num) // 2
+    if len(num) % 2 == 0:
+        half = center
+    else:
+        half = center + 1
+    sum1 = sum([int(x) for x in num[:center]])
+    sum2 = sum([int(x) for x in num[half:]])
+    if sum1 == sum2:
+        return True
+    return False
+
+
+def palindrome(num):
+    num = str(num)
+    reverse = num[len(num)::-1]
+    if num == reverse:
+        return True
+    return False
+
+
+def morph_number(num):
+    square = num ** 2
+    num = str(num)
+    square = str(square)
+    if num in square:
+        return True
+    return False
+
+
+def centered_hexagonal_number():
+    number = 1
+    i = 1
+    while True:
+        yield number
+        i += 1
+        number = 3 * i * (i - 1) + 1
+
+
+def check_centered_hexagonal_number(num):
+    hexagonal_number = centered_hexagonal_number()
+    if num in hexagonal_number:
+        return True
+    return False
+
+
+def check_number(gen, func):
+    for num in gen:
+        if func(num):
+            yield num
+
+
+function = [lucky_number, palindrome, morph_number]
+# 1 способ
+print("1 способ")
+for f in function:
+    print(f"\n{f.__name__}")
+    result = [x for x in prime_numbers_generator(count_number=10000) if f(x)]
+    print(result)
+
+
+# 2 способ
+print("\n 2 способ")
+for f in function:
+    print(f"\n{f.__name__}")
+    for numb in check_number(prime_numbers_generator(count_number=10000), f):
+        print(numb)
+
+
+# 3 способ
+def filter_prime_numbers_generator(count_number, func):
+    prime_numbers = []
+    i = 1
+    while i < count_number:
+        i += 1
+        if check(i, prime_numbers):
+            prime_numbers.append(i)
+            if func(i):
+                yield i
+
+
+print("\n 3 способ")
+for f in function:
+    print(f"\n{f.__name__}")
+    numbers = filter_prime_numbers_generator(count_number=10000, func=f)
+    for numb in numbers:
+        print(numb)
+
+
+# 4 способ
+print("\n 4 способ")
+for f in function:
+    print(f"\n{f.__name__}")
+    print(list(filter(f, prime_numbers_generator(count_number=10000))))
+
+
+# 5 способ
+def filters_prime_numbers_generator(count_number, func=None):
+    prime_numbers = []
+    i = 1
+    while i < count_number:
+        i += 1
+        if check(i, prime_numbers):
+            prime_numbers.append(i)
+            if func is None:
+                yield i
+            else:
+                for fun in func:
+                    if not fun(i):
+                        break
+                else:
+                    yield i
+
+
+print("\n 5 способ")
+functions = [lucky_number, palindrome]
+for numb in filters_prime_numbers_generator(count_number=10000, func=functions):
+    print(numb)
