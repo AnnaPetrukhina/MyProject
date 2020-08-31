@@ -62,6 +62,31 @@ def grouped(file_name):
     yield lin, count_nok
 
 
-grouped_events = grouped("events.txt")
-for group_time, event_count in grouped_events:
+# grouped_events = grouped("events.txt")
+# for group_time, event_count in grouped_events:
+#     print(f'{group_time}] {event_count}')
+
+
+def get_lines_nok(file_name):
+    with open(file_name, 'r') as ff:
+        for line in ff:
+            if line[-4:-1] == "NOK":
+                day = line.find(":") + 3
+                yield line[:day]
+
+
+def counter_nok(file_name):
+    lines = get_lines_nok(file_name)
+    lin = next(lines)
+    count = 1
+    for line in lines:
+        if lin != line:
+            yield lin, count
+            lin = line
+            count = 0
+        count += 1
+    yield lin, count
+
+
+for group_time, event_count in counter_nok(file_name="events.txt"):
     print(f'{group_time}] {event_count}')
