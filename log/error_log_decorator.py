@@ -69,3 +69,37 @@ except Exception as exc:
 
 # Усложненное задание (делать по желанию).
 # Написать декоратор с параметром - именем файла
+def log_errors_param(file_name):
+    def wrap(func):
+        def write_errors(*args, **kwargs):
+            with open(file_name, "a", encoding="utf-8") as f:
+                try:
+                    func(*args, **kwargs)
+                except Exception as e:
+                    type_exception = sys.exc_info()[0].__name__
+                    if args != () and kwargs != {}:
+                        argument = f"с параметрами вызова {args}, {kwargs}"
+                    elif args != () and kwargs == {}:
+                        argument = f"с параметрами вызова {args}"
+                    elif args == () and kwargs != {}:
+                        argument = f"с параметрами вызова {kwargs}"
+                    else:
+                        argument = f"без параметров"
+                    f.write(f"В функции {func.__name__} {argument} произошла ошибка "
+                            f"{type_exception}: {e} \n")
+                    raise
+        return write_errors
+
+    return wrap
+
+
+@log_errors_param('function_errors2.log')
+def func2(param):
+    return param / 0
+
+
+print(" ")
+try:
+    func2(param=42)
+except Exception as exc:
+    print(f'Invalid format: {exc}')
