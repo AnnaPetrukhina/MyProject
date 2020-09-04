@@ -32,6 +32,7 @@ def time_track(func):
         return result
     return surrogate
 
+
 def generation_filename(path_file):
     for dirpath, dirnames, filenames in os.walk(path_file):
         for f in filenames:
