@@ -57,6 +57,53 @@ class GetFrame:
         raise StopIteration()
 
 
+class GetScore:
+
+    def __init__(self, game_result):
+        self.result = game_result
+        self.score = 0
+
+    def strike(self, frame):
+        logging.debug(f' {frame} страйк - 20 очков')
+        self.score += 20
+
+    def spare(self, frame):
+        logging.debug(f' {frame} spare - 15 очков')
+        self.score += 15
+
+    def sum_frame(self, frame):
+        sum_f = int(frame[0]) + int(frame[1])
+        logging.debug(f' {frame} - {sum_f}')
+        self.score += sum_f
+
+    def emptiness(self, frame):
+        if frame[0] == frame[1]:
+            logging.debug(f' {frame} - 0 очков')
+            self.score += 0
+        elif frame[0] == "-":
+            logging.debug(f' {frame} - {frame[1]} очков')
+            self.score += int(frame[1])
+        else:
+            logging.debug(f' {frame} - {frame[0]} очков')
+            self.score += int(frame[0])
+
+    def run(self):
+        strike = ["X", "Х"]
+        frames = [x for x in GetFrame(self.result)]
+        for frame in frames:
+            f = "".join(frame)
+            if f in strike:
+                self.strike(f)
+            elif "/" in f:
+                self.spare(f)
+            elif "-" in f:
+                self.emptiness(frame=f)
+            else:
+                self.sum_frame(frame=f)
+        logging.debug(f' {self.result} - {self.score} очков\n')
+        return self.score
+
+
 log = logging.getLogger('Bowling')
 log.setLevel(logging.DEBUG)
 fh = logging.FileHandler("errors_bowling.log", 'w', 'utf-8', delay=True)
@@ -66,10 +113,11 @@ log.addHandler(fh)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    result_game = "7/124/9/8/181/723--9"
+    result_game = "Х4/34-49/1245--8/X"
     try:
-        frames = GetFrame(result_game)
-        for f in frames:
-            print(f)
+        log.info(f'Посчитаем количество очков результата {result_game}')
+        get_score = GetScore(result_game)
+        score = get_score.run()
+        log.info(f'{result_game} - {score}')
     except Exception as ex:
         log.exception(f'{ex}')
