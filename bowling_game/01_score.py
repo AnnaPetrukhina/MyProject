@@ -42,8 +42,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     try:
         get_score = GetScore(args.result)
-        get_score.run()
-        score = get_score.score
+        score = get_score.run()
         print(f"{args.result} - {score}")
     except IndexError as ex:
         print(ex)
