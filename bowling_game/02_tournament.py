@@ -34,10 +34,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='The scoring tournament result of bowling .')
     parser.add_argument("--protocol", action="store_const", const="tournament.txt",
                         dest="protocol", required=True, help='Protocol of the tournament')
-    parser.add_argument("--result", action="store_const", const="internal_scoring_tournament_result.txt",
+    parser.add_argument("--result", action="store_const", const="tournament_result.txt",
                         dest="result", required=True, help='Result of the tournament')
+    parser.add_argument("--internal_rule", action="store_true",
+                        dest="internal", help='Result of the tournament')
     args = parser.parse_args()
-    get_result_tour = GetResultTour(file_result=args.protocol, file_out=args.result)
+    if args.internal:
+        if args.result == "tournament_result.txt":
+            args.result = "internal_scoring_tournament_result.txt"
+        get_result_tour = GetResultTour(file_result=args.protocol, file_out=args.result, internal_scoring=True)
+    else:
+        get_result_tour = GetResultTour(file_result=args.protocol, file_out=args.result)
     get_result_tour.run()
 
 

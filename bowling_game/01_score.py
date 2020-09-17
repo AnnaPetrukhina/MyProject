@@ -34,14 +34,14 @@
 
 import argparse
 
-from bowling import GetScore
+from bowling import InternalGetScore
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='The scoring result of bowling .')
     parser.add_argument("result", type=str, help='Game result')
     args = parser.parse_args()
     try:
-        get_score = GetScore(args.result)
+        get_score = InternalGetScore(args.result)
         score = get_score.run()
         print(f"{args.result} - {score}")
     except IndexError as ex:

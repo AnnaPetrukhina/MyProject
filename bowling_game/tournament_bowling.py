@@ -4,14 +4,15 @@ from operator import itemgetter
 
 from prettytable import PrettyTable
 
-from bowling import GetScore
+from bowling import GetScore, InternalGetScore
 
 
 class GetResultTour:
 
-    def __init__(self, file_result, file_out):
+    def __init__(self, file_result, file_out, internal_scoring=False):
         self.file = file_result
         self.file_out = file_out
+        self.internal_scoring = internal_scoring
         self.max = 0
         self.winner = ""
         self.result_tournament = defaultdict(list)
@@ -27,7 +28,10 @@ class GetResultTour:
         self.matches_played[name] += 1
         result = line[:-1].split("\t")[1]
         try:
-            score = GetScore(result).run()
+            if self.internal_scoring:
+                score = InternalGetScore(result).run()
+            else:
+                score = GetScore(result).run()
             lg.debug(f"{name} {result} {score}")
             if score > self.max:
                 self.max = score
@@ -79,6 +83,9 @@ lg.addHandler(fh)
 
 if __name__ == '__main__':
     file = "tournament.txt"
-    file_score = "tournament_result.txt"
+    file_internal_score = "internal_scoring_tournament_result.txt"
+    file_score = "scoring_tournament_result.txt"
+    get_internal_result_tour = GetResultTour(file_result=file, file_out=file_internal_score, internal_scoring=True)
+    get_internal_result_tour.run()
     get_result_tour = GetResultTour(file_result=file, file_out=file_score)
     get_result_tour.run()

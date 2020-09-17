@@ -1,4 +1,5 @@
 import logging
+from abc import ABC, abstractmethod
 
 
 class GetFrame:
@@ -57,19 +58,20 @@ class GetFrame:
         raise StopIteration()
 
 
-class GetScore:
+class Score(ABC):
 
     def __init__(self, game_result):
         self.result = game_result
         self.score = 0
+        self.frames = [x for x in GetFrame(self.result)]
 
-    def strike(self, frame):
-        logging.debug(f' {frame} страйк - 20 очков')
-        self.score += 20
+    @abstractmethod
+    def strike(self, frame, number):
+        pass
 
-    def spare(self, frame):
-        logging.debug(f' {frame} spare - 15 очков')
-        self.score += 15
+    @abstractmethod
+    def spare(self, frame, number):
+        pass
 
     def sum_frame(self, frame):
         sum_f = int(frame[0]) + int(frame[1])
@@ -89,19 +91,96 @@ class GetScore:
 
     def run(self):
         strike = ["X", "Х"]
-        frames = [x for x in GetFrame(self.result)]
-        for frame in frames:
+        for i, frame in enumerate(self.frames):
             f = "".join(frame)
-            if f in strike:
-                self.strike(f)
+            if strike[0] in f or strike[1] in f:
+                self.strike(f, number=i)
             elif "/" in f:
-                self.spare(f)
+                self.spare(f, number=i)
             elif "-" in f:
                 self.emptiness(frame=f)
             else:
                 self.sum_frame(frame=f)
         logging.debug(f' {self.result} - {self.score} очков\n')
         return self.score
+
+
+class InternalGetScore(Score):
+
+    def strike(self, frame, number):
+        logging.debug(f' {frame} страйк - 20 очков')
+        self.score += 20
+
+    def spare(self, frame, number):
+        logging.debug(f' {frame} spare - 15 очков')
+        self.score += 15
+
+
+class GetScore(Score):
+
+    def get_score_next_hurl(self, next_symbol):
+        strike = ["X", "Х"]
+        numeral = [str(x) for x in list(range(1, 10))]
+        next_symbol = "".join(next_symbol)
+        if next_symbol[0] in strike and next_symbol[1] in strike:
+            logging.debug(f' страйк следующие два броска страйк - 30 очков')
+            self.score += 30
+        elif strike[0] in next_symbol or strike[1] in next_symbol:
+            num = next_symbol[0] if next_symbol[0] in numeral else next_symbol[1]
+            if "-" in next_symbol:
+                logging.debug(f' страйк следующие броски {next_symbol} - 20 очков')
+                self.score += 20
+            else:
+                logging.debug(f' страйк следующие броски {next_symbol} - {20 + int(num)} очков')
+                self.score += 20 + int(num)
+        elif "/" in next_symbol:
+            logging.debug(f' страйк следующие броски {next_symbol} - 20 очков')
+            self.score += 20
+        elif "-" in next_symbol:
+            num = next_symbol[0] if next_symbol[0] in numeral else next_symbol[1]
+            logging.debug(f' страйк следующие броски {next_symbol} - {int(num) + 10}')
+            self.emptiness(frame=next_symbol)
+            self.score += 10
+        else:
+            logging.debug(f' страйк следующие броски {next_symbol} -'
+                          f' {int(next_symbol[0]) + int(next_symbol[1]) + 10} очков')
+            self.sum_frame(frame=next_symbol)
+            self.score += 10
+
+    def strike(self, frame, number):
+        if number == 9:
+            logging.debug(f' послейдний фрейм страйк {frame} - 10 очков')
+            self.score += 10
+        elif number == 8:
+            next_symbol = self.frames[number + 1]
+            if len(next_symbol) == 1:
+                logging.debug(f' страйк последний бросок также страйк - 20 очков')
+                self.score += 20
+            else:
+                self.get_score_next_hurl(next_symbol)
+        else:
+            next_symbol = self.frames[number + 1]
+            if len(next_symbol) == 1:
+                nxt = self.frames[number + 2][0]
+                next_symbol.append(nxt)
+            self.get_score_next_hurl(next_symbol)
+
+    def spare(self, frame, number):
+        strike = ["X", "Х"]
+        if number == 9:
+            logging.debug(f' послейдний фрейм спэр {frame} - 10 очков')
+            self.score += 10
+        else:
+            nxt = self.frames[number + 1][0]
+            if nxt in strike:
+                logging.debug(f' спэр следующий бросок страйк - 20 очков')
+                self.score += 20
+            elif nxt == "-":
+                logging.debug(f' спэр следующий бросок {nxt} - 10 очков')
+                self.score += 10
+            else:
+                logging.debug(f' спэр следующий бросок {nxt} - {10 + int(nxt)} очков')
+                self.score += 10 + int(nxt)
 
 
 log = logging.getLogger('Bowling')
@@ -113,11 +192,15 @@ log.addHandler(fh)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    result_game = "Х4/34-49/1245--8/X"
+    # 108, 109
+    result_game = "7/124/9/8/181/723--9"
     try:
         log.info(f'Посчитаем количество очков результата {result_game}')
+        get_score_internal = InternalGetScore(result_game)
+        score_internal = get_score_internal.run()
+        log.info(f'подстчет очков по внутренним правилам: {result_game} - {score_internal}\n')
         get_score = GetScore(result_game)
         score = get_score.run()
-        log.info(f'{result_game} - {score}')
+        log.info(f'подстчет очков по внешним правилам: {result_game} - {score}')
     except Exception as ex:
         log.exception(f'{ex}')
