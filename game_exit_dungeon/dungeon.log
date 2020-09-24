@@ -1,0 +1,108 @@
+2020-09-24 19:05 - Dungeon - INFO - Начнем поиск выхода
+2020-09-24 19:05 - Dungeon - DEBUG - ['Mob_exp10_tm0', {'Location_1_tm1040': ['Mob_exp20_tm200', 'Mob_exp20_tm200', {'Location_3_tm33000': [{'Location_7_tm33300': [{'Location_10_tm55100': ['Mob_exp25_tm1', 'Mob_exp30_tm1', 'Mob_exp20_tm1', 'Mob_exp24_tm1', {'Location_12_tm0.0987654320': ['Boss100_exp100_tm10', 'Boss200_exp30_tm10']}]}]}]}]}, {'Location_2_tm33300': ['Mob_exp20_tm1677', {'Location_4_tm44000': ['Mob_exp10_tm40', 'Mob_exp15_tm40', 'Mob_exp20_tm40']}, {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}, {'Location_6_tm30000': ['Boss_exp280_tm10400000', {'Location_B1_tm0.098765432': ['Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0']}]}]}]
+2020-09-24 19:05 - Dungeon - DEBUG - монстр Mob_exp10_tm0
+2020-09-24 19:05 - Dungeon - DEBUG - локация {'Location_1_tm1040': ['Mob_exp20_tm200', 'Mob_exp20_tm200', {'Location_3_tm33000': [{'Location_7_tm33300': [{'Location_10_tm55100': ['Mob_exp25_tm1', 'Mob_exp30_tm1', 'Mob_exp20_tm1', 'Mob_exp24_tm1', {'Location_12_tm0.0987654320': ['Boss100_exp100_tm10', 'Boss200_exp30_tm10']}]}]}]}]}
+2020-09-24 19:05 - Dungeon - DEBUG - локация {'Location_2_tm33300': ['Mob_exp20_tm1677', {'Location_4_tm44000': ['Mob_exp10_tm40', 'Mob_exp15_tm40', 'Mob_exp20_tm40']}, {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}, {'Location_6_tm30000': ['Boss_exp280_tm10400000', {'Location_B1_tm0.098765432': ['Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0']}]}]}
+2020-09-24 19:05 - Dungeon - DEBUG - количество локаций 2
+2020-09-24 19:06 - Dungeon - DEBUG - выбор монстра
+2020-09-24 19:06 - Dungeon - DEBUG - получено 10 опыта. Потрачено 0 секундю
+2020-09-24 19:06 - Dungeon - DEBUG - [{'Location_1_tm1040': ['Mob_exp20_tm200', 'Mob_exp20_tm200', {'Location_3_tm33000': [{'Location_7_tm33300': [{'Location_10_tm55100': ['Mob_exp25_tm1', 'Mob_exp30_tm1', 'Mob_exp20_tm1', 'Mob_exp24_tm1', {'Location_12_tm0.0987654320': ['Boss100_exp100_tm10', 'Boss200_exp30_tm10']}]}]}]}]}, {'Location_2_tm33300': ['Mob_exp20_tm1677', {'Location_4_tm44000': ['Mob_exp10_tm40', 'Mob_exp15_tm40', 'Mob_exp20_tm40']}, {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}, {'Location_6_tm30000': ['Boss_exp280_tm10400000', {'Location_B1_tm0.098765432': ['Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0']}]}]}]
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_1_tm1040': ['Mob_exp20_tm200', 'Mob_exp20_tm200', {'Location_3_tm33000': [{'Location_7_tm33300': [{'Location_10_tm55100': ['Mob_exp25_tm1', 'Mob_exp30_tm1', 'Mob_exp20_tm1', 'Mob_exp24_tm1', {'Location_12_tm0.0987654320': ['Boss100_exp100_tm10', 'Boss200_exp30_tm10']}]}]}]}]}
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_2_tm33300': ['Mob_exp20_tm1677', {'Location_4_tm44000': ['Mob_exp10_tm40', 'Mob_exp15_tm40', 'Mob_exp20_tm40']}, {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}, {'Location_6_tm30000': ['Boss_exp280_tm10400000', {'Location_B1_tm0.098765432': ['Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0']}]}]}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 2
+2020-09-24 19:06 - Dungeon - DEBUG - выбор локации
+2020-09-24 19:06 - Dungeon - DEBUG - затрачно 33300 секунд
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_2_tm33300': ['Mob_exp20_tm1677', {'Location_4_tm44000': ['Mob_exp10_tm40', 'Mob_exp15_tm40', 'Mob_exp20_tm40']}, {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}, {'Location_6_tm30000': ['Boss_exp280_tm10400000', {'Location_B1_tm0.098765432': ['Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0']}]}]}
+{'location': ['Location_0', 'Location_2'], 'experienced': 10, 'current_date': Decimal('33300')}
+2020-09-24 19:06 - Dungeon - DEBUG - ['Mob_exp20_tm1677', {'Location_4_tm44000': ['Mob_exp10_tm40', 'Mob_exp15_tm40', 'Mob_exp20_tm40']}, {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}, {'Location_6_tm30000': ['Boss_exp280_tm10400000', {'Location_B1_tm0.098765432': ['Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0']}]}]
+2020-09-24 19:06 - Dungeon - DEBUG - монстр Mob_exp20_tm1677
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_4_tm44000': ['Mob_exp10_tm40', 'Mob_exp15_tm40', 'Mob_exp20_tm40']}
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_6_tm30000': ['Boss_exp280_tm10400000', {'Location_B1_tm0.098765432': ['Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0']}]}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 3
+2020-09-24 19:06 - Dungeon - DEBUG - выбор монстра
+2020-09-24 19:06 - Dungeon - DEBUG - получено 30 опыта. Потрачено 1677 секундю
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_2_tm33300': [{'Location_4_tm44000': ['Mob_exp10_tm40', 'Mob_exp15_tm40', 'Mob_exp20_tm40']}, {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}, {'Location_6_tm30000': ['Boss_exp280_tm10400000', {'Location_B1_tm0.098765432': ['Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0']}]}]}
+{'location': ['Location_0', 'Location_2'], 'experienced': 30, 'current_date': Decimal('34977')}
+2020-09-24 19:06 - Dungeon - DEBUG - [{'Location_4_tm44000': ['Mob_exp10_tm40', 'Mob_exp15_tm40', 'Mob_exp20_tm40']}, {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}, {'Location_6_tm30000': ['Boss_exp280_tm10400000', {'Location_B1_tm0.098765432': ['Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0']}]}]
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_4_tm44000': ['Mob_exp10_tm40', 'Mob_exp15_tm40', 'Mob_exp20_tm40']}
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_6_tm30000': ['Boss_exp280_tm10400000', {'Location_B1_tm0.098765432': ['Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0', 'Mob_exp10_tm0']}]}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 3
+2020-09-24 19:06 - Dungeon - DEBUG - выбор локации
+2020-09-24 19:06 - Dungeon - DEBUG - затрачно 55100 секунд
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_5_tm55100': [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]}
+{'location': ['Location_0', 'Location_2', 'Location_5'], 'experienced': 30, 'current_date': Decimal('90077')}
+2020-09-24 19:06 - Dungeon - DEBUG - [{'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}, {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}]
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_8_tm30000': ['Mob_exp20_tm820', 'Mob_exp25_tm825', 'Mob_exp30_tm830', 'Mob_exp35_tm835', 'Mob_exp40_tm840']}
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 2
+2020-09-24 19:06 - Dungeon - DEBUG - выбор локации
+2020-09-24 19:06 - Dungeon - DEBUG - затрачно 26000 секунд
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_9_tm26000': ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}
+{'location': ['Location_0', 'Location_2', 'Location_5', 'Location_9'], 'experienced': 30, 'current_date': Decimal('116077')}
+2020-09-24 19:06 - Dungeon - DEBUG - ['Mob_exp30_tm30', {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]
+2020-09-24 19:06 - Dungeon - DEBUG - монстр Mob_exp30_tm30
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 1
+2020-09-24 19:06 - Dungeon - DEBUG - выбор монстра
+2020-09-24 19:06 - Dungeon - DEBUG - получено 60 опыта. Потрачено 30 секундю
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_9_tm26000': [{'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]}
+{'location': ['Location_0', 'Location_2', 'Location_5', 'Location_9'], 'experienced': 60, 'current_date': Decimal('116107')}
+2020-09-24 19:06 - Dungeon - DEBUG - [{'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}]
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 1
+2020-09-24 19:06 - Dungeon - DEBUG - выбор локации
+2020-09-24 19:06 - Dungeon - DEBUG - затрачно 4000 секунд
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_11_tm4000': ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}
+{'location': ['Location_0', 'Location_2', 'Location_5', 'Location_9', 'Location_11'], 'experienced': 60, 'current_date': Decimal('120107')}
+2020-09-24 19:06 - Dungeon - DEBUG - ['Boss_exp100_tm1040', {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]
+2020-09-24 19:06 - Dungeon - DEBUG - монстр Boss_exp100_tm1040
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 1
+2020-09-24 19:06 - Dungeon - DEBUG - выбор монстра
+2020-09-24 19:06 - Dungeon - DEBUG - получено 160 опыта. Потрачено 1040 секундю
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_11_tm4000': [{'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]}
+{'location': ['Location_0', 'Location_2', 'Location_5', 'Location_9', 'Location_11'], 'experienced': 160, 'current_date': Decimal('121147')}
+2020-09-24 19:06 - Dungeon - DEBUG - [{'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}]
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 1
+2020-09-24 19:06 - Dungeon - DEBUG - выбор локации
+2020-09-24 19:06 - Dungeon - DEBUG - затрачно 2000 секунд
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}
+{'location': ['Location_0', 'Location_2', 'Location_5', 'Location_9', 'Location_11', 'Location_B2'], 'experienced': 160, 'current_date': Decimal('123147')}
+2020-09-24 19:06 - Dungeon - DEBUG - ['Mob_exp40_tm50', 'Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]
+2020-09-24 19:06 - Dungeon - DEBUG - монстр Mob_exp40_tm50
+2020-09-24 19:06 - Dungeon - DEBUG - монстр Mob_exp40_tm50
+2020-09-24 19:06 - Dungeon - DEBUG - монстр Mob_exp40_tm50
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Hatch_tm159.098765432': 'You are winner'}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 1
+2020-09-24 19:06 - Dungeon - DEBUG - выбор монстра
+2020-09-24 19:06 - Dungeon - DEBUG - получено 200 опыта. Потрачено 50 секундю
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_B2_tm2000': ['Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}
+{'location': ['Location_0', 'Location_2', 'Location_5', 'Location_9', 'Location_11', 'Location_B2'], 'experienced': 200, 'current_date': Decimal('123197')}
+2020-09-24 19:06 - Dungeon - DEBUG - ['Mob_exp40_tm50', 'Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]
+2020-09-24 19:06 - Dungeon - DEBUG - монстр Mob_exp40_tm50
+2020-09-24 19:06 - Dungeon - DEBUG - монстр Mob_exp40_tm50
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Hatch_tm159.098765432': 'You are winner'}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 1
+2020-09-24 19:06 - Dungeon - DEBUG - выбор монстра
+2020-09-24 19:06 - Dungeon - DEBUG - получено 240 опыта. Потрачено 50 секундю
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_B2_tm2000': ['Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]}
+{'location': ['Location_0', 'Location_2', 'Location_5', 'Location_9', 'Location_11', 'Location_B2'], 'experienced': 240, 'current_date': Decimal('123247')}
+2020-09-24 19:06 - Dungeon - DEBUG - ['Mob_exp40_tm50', {'Hatch_tm159.098765432': 'You are winner'}]
+2020-09-24 19:06 - Dungeon - DEBUG - монстр Mob_exp40_tm50
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Hatch_tm159.098765432': 'You are winner'}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 1
+2020-09-24 19:06 - Dungeon - DEBUG - выбор монстра
+2020-09-24 19:06 - Dungeon - DEBUG - получено 280 опыта. Потрачено 50 секундю
+2020-09-24 19:06 - Dungeon - DEBUG - {'Location_B2_tm2000': [{'Hatch_tm159.098765432': 'You are winner'}]}
+{'location': ['Location_0', 'Location_2', 'Location_5', 'Location_9', 'Location_11', 'Location_B2'], 'experienced': 280, 'current_date': Decimal('123297')}
+2020-09-24 19:06 - Dungeon - DEBUG - [{'Hatch_tm159.098765432': 'You are winner'}]
+2020-09-24 19:06 - Dungeon - DEBUG - локация {'Hatch_tm159.098765432': 'You are winner'}
+2020-09-24 19:06 - Dungeon - DEBUG - количество локаций 1
+2020-09-24 19:06 - Dungeon - DEBUG - найден люк
+2020-09-24 19:06 - Dungeon - DEBUG - затрачно 159.098765432 секунд
+2020-09-24 19:06 - Dungeon - DEBUG - Найден выход из подземелья
+2020-09-24 19:06 - Dungeon - DEBUG - {'Hatch_tm159.098765432': 'You are winner'}
+{'location': ['Location_0', 'Location_2', 'Location_5', 'Location_9', 'Location_11', 'Location_B2', 'Hatch'], 'experienced': 280, 'current_date': datetime.timedelta(days=1, seconds=37056, microseconds=98765)}
