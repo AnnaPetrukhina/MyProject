@@ -1,0 +1,262 @@
+# -*- coding: utf-8 -*-
+
+# В очередной спешке, проверив приложение с прогнозом погоды, вы выбежали
+# навстречу ревью вашего кода, которое ожидало вас в офисе.
+# И тут же день стал хуже - вместо обещанной облачности вас встретил ливень.
+
+# Вы промокли, настроение было испорчено, и на ревью вы уже пришли не в духе.
+# В итоге такого сокрушительного дня вы решили написать свою программу для прогноза погоды
+# из источника, которому вы доверяете.
+
+# Для этого вам нужно:
+
+# Создать модуль-движок с классом WeatherMaker, необходимым для получения и формирования предсказаний.
+# В нём должен быть метод, получающий прогноз с выбранного вами сайта (парсинг + re) за некоторый диапазон дат,
+# а затем, получив данные, сформировать их в словарь {погода: Облачная, температура: 10, дата:datetime...}
+
+# Добавить класс ImageMaker.
+# Снабдить его методом рисования открытки
+# (использовать OpenCV, в качестве заготовки брать lesson_016/python_snippets/external_data/probe.jpg):
+#   С текстом, состоящим из полученных данных (пригодится cv2.putText)
+#   С изображением, соответствующим типу погоды
+# (хранятся в lesson_016/python_snippets/external_data/weather_img ,но можно нарисовать/добавить свои)
+#   В качестве фона добавить градиент цвета, отражающего тип погоды
+# Солнечно - от желтого к белому
+# Дождь - от синего к белому
+# Снег - от голубого к белому
+# Облачно - от серого к белому
+
+# Добавить класс DatabaseUpdater с методами:
+#   Получающим данные из базы данных за указанный диапазон дат.
+#   Сохраняющим прогнозы в базу данных (использовать peewee)
+
+# Сделать программу с консольным интерфейсом, постаравшись все выполняемые действия вынести в отдельные функции.
+# Среди действий, доступных пользователю, должны быть:
+#   Добавление прогнозов за диапазон дат в базу данных
+#   Получение прогнозов за диапазон дат из базы
+#   Создание открыток из полученных прогнозов
+#   Выведение полученных прогнозов на консоль
+# При старте консольная утилита должна загружать прогнозы за прошедшую неделю.
+
+# Рекомендации:
+# Можно создать отдельный модуль для инициализирования базы данных.
+# Как далее использовать эту базу данных в движке:
+# Передавать DatabaseUpdater url-путь
+# https://peewee.readthedocs.io/en/latest/peewee/playhouse.html#db-url
+# Приконнектится по полученному url-пути к базе данных
+# Инициализировать её через DatabaseProxy()
+# https://peewee.readthedocs.io/en/latest/peewee/database.html#dynamically-defining-a-database
+import logging
+import cv2
+import bs4
+import requests
+from datetime import datetime
+from pathlib import Path
+from PIL import Image, ImageDraw, ImageFont, ImageColor
+
+
+CONDITIONS = {"clear": "Ясно",
+              "partly cloudy": "Переменная облачность",
+              "overcast": "Пасмурная погода",
+              "mostly cloudy": "В основном облачно",
+              "rain": "Дождь",
+              "drizzle": "Моросит",
+              "light rain": "Легкий дождь",
+              "heavy rain": "Ливень",
+              "sleet": "Мокрый снег",
+              "light sleet": "Легкий мокрый снег",
+              "heavy sleet": "Сильный мокрый снег",
+              "snow": "Снег",
+              "flurries": "Очень легкий снег",
+              "light snow": "Легкий снег",
+              "heavy snow": "Сильный снег"}
+
+
+class WeatherMaker:
+
+    def __init__(self, date=None):
+        if date is None:
+            date = datetime.now()
+            self.date = date.strftime("%Y-%m-%d")
+        else:
+            self.date = date
+        self.url = f"https://darksky.net/details/55.7616,37.6095/{self.date}/si12/en"
+        self.wind = ""
+        self.humidity = ""
+        self.weather = "неизвестно"
+
+    def _get_temperature(self, temperature, high_low_temperature):
+        average_temperature = temperature.find_next('span', class_='num').contents
+        units_temperature = temperature.find_next('span', class_='unit').contents
+        average_temperature.extend(units_temperature)
+        self.average_temperature = "".join(average_temperature)
+        high_low = []
+        for temperature in high_low_temperature:
+            high_low.extend(temperature.contents)
+        self.low_temperature = high_low[0]
+        self.high_temperature = high_low[1]
+
+    @staticmethod
+    def _get_information(information):
+        inf = information.find_next("span", class_="num swip").contents + \
+              information.find_next("span", class_="unit swap").contents
+        return "".join(inf)
+
+    def _get_weather(self, weather):
+        weather_english = weather.contents
+        if len(weather_english) != 0:
+            for condition_en, condition_ru in CONDITIONS.items():
+                if condition_en in weather_english[0].lower():
+                    self.weather = condition_ru
+                else:
+                    log.info(f"Перевода {weather_english} нет в CONDITIONS")
+        log.debug("Погода неизвестна")
+
+    def parser(self):
+        try:
+            html = requests.get(self.url).text
+            soup = bs4.BeautifulSoup(html, 'html.parser')
+            temperature = soup.find('div', class_="temperature")
+            high_low_temperature = soup.find_all('span', class_='temp')
+            self._get_temperature(temperature=temperature, high_low_temperature=high_low_temperature)
+            wind = soup.find('div', class_="wind")
+            self.wind = self._get_information(information=wind)
+            humidity = soup.find('div', class_="humidity")
+            self.humidity = self._get_information(information=humidity)
+            weather = soup.find('p', id="summary")
+            self._get_weather(weather=weather)
+        except Exception as exp:
+            log.info(f"Неожиданная ошибка: {exp}")
+            print(f"Неожиданная ошибка: {exp}")
+
+    def run(self):
+        self.parser()
+        self.date = datetime.strptime(self.date, "%Y-%m-%d")
+        self.date = self.date.strftime("%d.%m.%y")
+        weather = {
+            "дата": self.date,
+            "средняя температура": self.average_temperature,
+            "максимальная температура": self.high_temperature,
+            "минимальная температура": self.low_temperature,
+            "ветер": self.wind,
+            "влажность": self.humidity,
+            "погода": self.weather
+        }
+        log.debug(weather)
+        return weather
+
+
+class ImageMaker:
+
+    def __init__(self, weather_date, path, path_result, show=True):
+        self.weather_date = weather_date
+        self.image_for_postcard = {
+            "переменная облачность": "cloud.jpg",
+            "в основном облачно": "cloud.jpg",
+            "пасмурная погода": "cloud.jpg",
+            "дождь": "rain.jpg",
+            "моросит": "rain.jpg",
+            "легкий дождь": "rain.jpg",
+            "ливень": "rain.jpg",
+            "сильный снег": "snow.jpg",
+            "легкий снег": "snow.jpg",
+            "мокрый снег": "snow.jpg",
+            "легкий мокрый снег": "snow.jpg",
+            "сильный мокрый снег": "snow.jpg",
+            "снег": "snow.jpg",
+            "очень легкий снег": "snow.jpg",
+            "ясно": "sun.jpg",
+            "неизвестно": "question.jpg"
+        }
+
+        self.method = {
+            "cloud.jpg": lambda step: (120 + step // 4, 120 + step // 4, 120 + step // 4),
+            "rain.jpg": lambda step: (255, step // 2, step // 2),
+            "snow.jpg": lambda step: (255, 255, step // 2),
+            "sun.jpg": lambda step: (step // 2, 255, 255),
+            "question.jpg": lambda step: (step // 2, 255, 255)
+        }
+        self.path = path
+        self.path_result = path_result
+        self.empty_path = path / "empty.jpg"
+        self.image = cv2.imread(f"{self.empty_path}")
+        self.thickness = 10
+        self.show = show
+
+    def weather_condition(self, image, picture, state_weather):
+        width = image.shape[1]
+        height = image.shape[0]
+        image_weather = cv2.imread(f"{picture}")
+        for step in range(0, width + 1, 5):
+            color = self.method[state_weather](step)
+            start_point = (step, 0)
+            end_point = (step, height)
+            image = cv2.line(image, start_point, end_point, color, self.thickness)
+        image[50:50 + image_weather.shape[0], 25:25 + image_weather.shape[1]] = image_weather
+        return image
+
+    def add_text(self):
+        im = Image.open(self.path_result)
+        draw = ImageDraw.Draw(im)
+        font_path_ticket = Path.cwd() / "fonts" / "ofont.ru_Bressay Trial.ttf"
+        font = ImageFont.truetype(f"{font_path_ticket}", size=30)
+        draw.text((17, 20), f'{self.weather_date["дата"]}', font=font, fill=ImageColor.colormap['black'])
+        draw.text((135, 100), f'{self.weather_date["средняя температура"]}',
+                  font=font, fill=ImageColor.colormap['black'])
+        draw.text((140, 65), f'{self.weather_date["погода"]}', font=font, fill=ImageColor.colormap['black'])
+        draw.text((20, 160), f'{self.weather_date["минимальная температура"]} ... '
+                             f'{self.weather_date["максимальная температура"]}',
+                  font=font, fill=ImageColor.colormap['black'])
+        font = ImageFont.truetype(f"{font_path_ticket}", size=25)
+        draw.text((290, 175), f'Ветер: {self.weather_date["ветер"]}', font=font, fill=ImageColor.colormap['black'])
+        draw.text((290, 210), f'Влажность: {self.weather_date["влажность"]}',
+                  font=font, fill=ImageColor.colormap['black'])
+        im.save(self.path_result)
+
+    def show_postcard(self):
+        postcard = cv2.imread(f"{self.path_result}")
+        cv2.imshow("Image_probe", postcard)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+    def run(self):
+        image = cv2.imread(f"{self.empty_path}")
+        weather = self.weather_date["погода"]
+        state_weather = "question.jpg"
+        postcard_image = self.path / state_weather
+        if weather.lower() in self.image_for_postcard:
+            postcard_image = self.path / self.image_for_postcard[weather.lower()]
+            state_weather = self.image_for_postcard[weather.lower()]
+        postcard = self.weather_condition(image=image, picture=postcard_image, state_weather=state_weather)
+        cv2.imwrite(f"{self.path_result}", postcard)
+        self.add_text()
+        if self.show:
+            self.show_postcard()
+
+
+log = logging.getLogger('Weather')
+log.setLevel(logging.DEBUG)
+fh = logging.FileHandler("weather.log", 'w', 'utf-8', delay=True)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M')
+fh.setFormatter(formatter)
+log.addHandler(fh)
+
+if __name__ == '__main__':
+    path_img_weather = Path.cwd() / "weather_img"
+
+    # пременная облочность
+    date_weather = "2020-10-01"
+    # дождь
+    # date_weather = "2020-09-10"
+    # ясно
+    # date_weather = "2020-09-15"
+    # снег
+    # date_weather = "2020-01-02"
+    # неизвестно
+    # date_weather = "2021-01-02"
+
+    weather_maker = WeatherMaker(date=date_weather)
+    w = weather_maker.run()
+    path_postcard = path_img_weather / "weather_postcard"/f"postcard_{w['дата']}.jpg"
+    im_maker = ImageMaker(weather_date=w, path=path_img_weather, path_result=path_postcard)
+    im_maker.run()
