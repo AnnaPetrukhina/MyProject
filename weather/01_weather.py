@@ -75,7 +75,9 @@ CONDITIONS = {"clear": "Ясно",
               "snow": "Снег",
               "flurries": "Очень легкий снег",
               "light snow": "Легкий снег",
-              "heavy snow": "Сильный снег"}
+              "heavy snow": "Сильный снег",
+              "foggy": "Туманно"
+              }
 
 
 class WeatherMaker:
@@ -112,10 +114,9 @@ class WeatherMaker:
         weather_english = weather.contents
         if len(weather_english) != 0:
             for condition_en, condition_ru in CONDITIONS.items():
+                log.debug(f"Ищем CONDITIONS в {weather_english[0]}")
                 if condition_en in weather_english[0].lower():
                     self.weather = condition_ru
-                else:
-                    log.info(f"Перевода {weather_english} нет в CONDITIONS")
         log.debug("Погода неизвестна")
 
     def parser(self):
@@ -160,6 +161,7 @@ class ImageMaker:
             "переменная облачность": "cloud.jpg",
             "в основном облачно": "cloud.jpg",
             "пасмурная погода": "cloud.jpg",
+            "туманно": "cloud.jpg",
             "дождь": "rain.jpg",
             "моросит": "rain.jpg",
             "легкий дождь": "rain.jpg",
@@ -358,6 +360,42 @@ def get_date_period(beginning_period, end_period):
     return beginning_period, end_period
 
 
+def weather_last_week(path_img):
+    end_period = datetime.now() - timedelta(days=1)
+    log.debug(f"Конец недели {end_period}")
+    beginning_period = end_period - timedelta(days=6)
+    log.debug(f"Начало недели {beginning_period}")
+    print(f"Погода за прошлую неделю ({beginning_period.strftime('%d.%m.%y')}"
+          f"-{end_period.strftime('%d.%m.%y')}):\n")
+    db_last_week = DatabaseUpdater(weather_data=None, beginning_period=beginning_period, end_period=end_period)
+    db_last_week.period(state="saving")
+    log.debug("Добавили данные погоды за прошлую неделю в БД")
+    weather = db_last_week.period(state="receiving")
+    db_last_week.getting_postcard(path_img=path_img, weather_data=weather, show=True)
+    db_last_week.show_weather(weather_data=weather)
+
+
+def actions_available_user(selecting_user_action, user_action, weather_date, db_user_action):
+    if len(weather_date) != 0:
+        log.debug(f"Данные о погоде за период {db_user_action.start, db_user_action.end} уже получены")
+        postcard_date_weather_period = weather_date
+    else:
+        log.debug(f"Данных о погоде за период {db_user_action.start, db_user_action.end} нет")
+        postcard_date_weather_period = None
+
+    log.debug(f"Пользователь выбрал действие {selecting_user_action}")
+    if selecting_user_action == "1" or selecting_user_action == "2":
+        log.debug(f"Действие {user_action[0]}")
+        weather_date = user_action[1](state=user_action[2])
+    elif selecting_user_action == "3":
+        log.debug(f"Действие {user_action[0]}")
+        user_action[1](path_img=path_img_weather, weather_data=postcard_date_weather_period, show=True)
+    elif selecting_user_action == "4":
+        log.debug(f"Действие {user_action[0]}")
+        user_action[1](weather_data=postcard_date_weather_period)
+    return weather_date
+
+
 log = logging.getLogger('Weather')
 log.setLevel(logging.DEBUG)
 fh = logging.FileHandler("weather.log", 'w', 'utf-8', delay=True)
@@ -370,6 +408,38 @@ if __name__ == '__main__':
     database = connect("sqlite:///weather.db ")
     DATABASE_PROXY.initialize(database)
     DATABASE_PROXY.create_tables([Weather])
+
+    print("Погода в Москве с добавлением прогнозов в БД\n")
+    weather_last_week(path_img=path_img_weather)
     start, end = date_period()
     start, end = get_date_period(beginning_period=start, end_period=end)
     db = DatabaseUpdater(weather_data=None, beginning_period=start, end_period=end)
+    action = {
+        "1": ["Добавить в базу прогноз погоды за этот период", db.period, "saving"],
+        "2": ["Получить из базы прогноз погоды за этот период", db.period, "receiving"],
+        "3": ["Создание открыток за этот период", db.getting_postcard],
+        "4": ["Выведение полученных прогнозов за этот период", db.show_weather],
+        "5": ["Поменять период"],
+        "6": ["Выход"],
+    }
+
+    print("Доступные действия:")
+    for key, value in action.items():
+        print(f"{key}: {value[0]}")
+
+    choice_user = input("Выберите действие >>> ")
+    weather_period = []
+    while choice_user != "6":
+        if choice_user == "5":
+            log.debug(f"Действие {action[choice_user][0]}")
+            start, end = date_period()
+            start, end = get_date_period(beginning_period=start, end_period=end)
+            db = DatabaseUpdater(weather_data=weather_period, beginning_period=start, end_period=end)
+        elif choice_user in action:
+            weather_period = actions_available_user(selecting_user_action=choice_user, user_action=action[choice_user],
+                                                    weather_date=weather_period, db_user_action=db)
+        else:
+            log.debug(f"Пользователь ввел данные, которых нет в предложенных вариантах {choice_user}")
+            print("Попробуйте выбрать другое действие")
+        choice_user = input("Выберите действие >>> ")
+    log.debug(f"Действие {action[choice_user][0]}")
