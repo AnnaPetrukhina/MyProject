@@ -50,10 +50,16 @@ import logging
 import cv2
 import bs4
 import requests
-from datetime import datetime
+import peewee
+import re
+from playhouse.db_url import connect
+from datetime import datetime, timedelta
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageColor
+from models import Weather
 
+RE_DATE = r"^([1-9]|0[1-9]|1[0-9]|2[0-9]|3[0-1])(\.)(0[1-9]|1[0-2])(\.)[0-9][0-9]$"
+DATABASE_PROXY = peewee.DatabaseProxy()
 
 CONDITIONS = {"clear": "Ясно",
               "partly cloudy": "Переменная облачность",
@@ -234,6 +240,124 @@ class ImageMaker:
             self.show_postcard()
 
 
+class DatabaseUpdater:
+
+    def __init__(self, weather_data, beginning_period, end_period):
+        self.weather = weather_data
+        self.request = beginning_period
+        self.start = beginning_period
+        self.end = end_period
+        self.state = {"saving": self.adding_weather_forecasts,
+                      "receiving": self.getting_weather_forecasts}
+
+    def _data_collection(self):
+        try:
+            data = Weather.get(Weather.date == self.request)
+            return {"дата": self.request,
+                    "средняя температура": data.average_temperature,
+                    "максимальная температура": data.high_temperature,
+                    "минимальная температура": data.low_temperature,
+                    "ветер": data.wind,
+                    "влажность": data.humidity,
+                    "погода": data.weather_description}
+        except Exception as ex:
+            log.info(f"Ошибка: {ex}")
+            print(f"{self.request} нет в БД")
+            return 0
+
+    def _saving_data(self):
+        try:
+            Weather.create(
+                date=self.weather["дата"],
+                average_temperature=self.weather["средняя температура"],
+                low_temperature=self.weather["минимальная температура"],
+                high_temperature=self.weather["максимальная температура"],
+                wind=self.weather["ветер"],
+                humidity=self.weather["влажность"],
+                weather_description=self.weather["погода"]
+            )
+        except peewee.IntegrityError:
+            print(f"{self.weather['дата']} уже есть в БД")
+            log.debug(f"{self.weather['дата']} уже есть в БД")
+        except Exception as ex:
+            log.info(f"Ошибка: {ex}")
+
+    def adding_weather_forecasts(self, date, weather_data):
+        date_weather = date.strftime("%Y-%m-%d")
+        self.weather = WeatherMaker(date=date_weather).run()
+        self.request = date.strftime("%d.%m.%y")
+        log.debug(f"{date} сохраняем в БД")
+        self._saving_data()
+        return weather_data
+
+    def getting_weather_forecasts(self, date, weather_data):
+        self.request = date.strftime("%d.%m.%y")
+        log.debug(f"{date} получаем из БД")
+        w = self._data_collection()
+        weather_data.append(w)
+        return weather_data
+
+    def period(self, state):
+        if self.start > self.end:
+            self.start, self.end = self.end, self.start
+        log.debug(f"Период: {self.start, self.end}")
+        weather_for_period = []
+        beginning_period = self.start
+        while beginning_period <= self.end:
+            weather_for_period = self.state[state](date=beginning_period, weather_data=weather_for_period)
+            beginning_period += timedelta(days=1)
+        return weather_for_period
+
+    def getting_postcard(self, path_img, weather_data=None, show=False):
+        if weather_data is None or len(weather_data) == 0:
+            weather_data = self.period(state="receiving")
+            log.debug("Получение данных для создания открытки")
+        for data in weather_data:
+            if data != 0:
+                path_postcard = path_img / "weather_postcard" / f"postcard_{data['дата']}.jpg"
+                im_maker = ImageMaker(weather_date=data, path=path_img, path_result=path_postcard, show=show)
+                im_maker.run()
+
+    def show_weather(self, weather_data=None):
+        if weather_data is None or len(weather_data) == 0:
+            weather_data = self.period(state="receiving")
+            log.debug("Получение данных для показа погоды")
+        for data in weather_data:
+            if data != 0:
+                print(f"Погода {data['дата']}:")
+                for k, v in data.items():
+                    if k == "дата":
+                        continue
+                    elif k == "погода":
+                        print(v)
+                    else:
+                        print(f"{k}: {v}")
+                print(" ")
+
+
+def date_period():
+    period_weather = input("Введите начало перида, конец периода через пробел с запятой "
+                           "(дата в формате день.месяц.год) >>> ")
+    try:
+        beginning_period, end_period = period_weather.split(", ")
+        while re.fullmatch(RE_DATE, beginning_period) is None or re.fullmatch(RE_DATE, end_period) is None:
+            period_weather = input("Вы ввели неправильно. Попробуйте еще раз >>> ")
+            beginning_period, end_period = period_weather.split(", ")
+        beginning_period = datetime.strptime(beginning_period, "%d.%m.%y")
+        end_period = datetime.strptime(end_period, "%d.%m.%y")
+        return beginning_period, end_period
+    except Exception as ex:
+        log.info(f"Произошла ошибка {ex} при вводе периода")
+        return 0, 0
+
+
+def get_date_period(beginning_period, end_period):
+    while beginning_period == end_period == 0:
+        print("Вы ввели неправильно. Попробуйте еще раз")
+        beginning_period, end_period = date_period()
+    return beginning_period, end_period
+
+
 log = logging.getLogger('Weather')
 log.setLevel(logging.DEBUG)
 fh = logging.FileHandler("weather.log", 'w', 'utf-8', delay=True)
@@ -243,20 +367,9 @@ log.addHandler(fh)
 
 if __name__ == '__main__':
     path_img_weather = Path.cwd() / "weather_img"
-
-    # пременная облочность
-    date_weather = "2020-10-01"
-    # дождь
-    # date_weather = "2020-09-10"
-    # ясно
-    # date_weather = "2020-09-15"
-    # снег
-    # date_weather = "2020-01-02"
-    # неизвестно
-    # date_weather = "2021-01-02"
-
-    weather_maker = WeatherMaker(date=date_weather)
-    w = weather_maker.run()
-    path_postcard = path_img_weather / "weather_postcard"/f"postcard_{w['дата']}.jpg"
-    im_maker = ImageMaker(weather_date=w, path=path_img_weather, path_result=path_postcard)
-    im_maker.run()
+    database = connect("sqlite:///weather.db ")
+    DATABASE_PROXY.initialize(database)
+    DATABASE_PROXY.create_tables([Weather])
+    start, end = date_period()
+    start, end = get_date_period(beginning_period=start, end_period=end)
+    db = DatabaseUpdater(weather_data=None, beginning_period=start, end_period=end)
