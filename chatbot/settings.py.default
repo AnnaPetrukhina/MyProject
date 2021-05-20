@@ -27,7 +27,7 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "MR158"
         },
         "Екатеринбург": {
-            "interval": {
+            "interval": {# "рейс раз в два месяца",
                 "density": "2 месяц",
                 "end_time": None,
                 "begin_time": "23-09-2020"
@@ -76,13 +76,13 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "MV167"
         },
         "Санкт-Петербург": {
-            "interval": {
+            "interval": {#"рейс раз в неделю"
                 "density": "1 неделя",
                 "end_time": "16-12-2020",
                 "begin_time": "16-11-2020"
             },
             "date": None,
-            "name_of_flight": "MSR181"
+            "name_of_flight": "MSPR181"
         }
     },
     "Ростов-на-Дону": {
@@ -109,7 +109,7 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "RE110"
         },
         "Владивосток": {
-            "interval": {
+            "interval": {#"рейс раз в месяц"
                 "density": "1 месяц",
                 "end_time": None,
                 "begin_time": "08-11-2020"
@@ -118,7 +118,7 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "RVR114"
         },
         "Москва": {
-            "interval": {
+            "interval": {#"рейс раз в неделю"
                 "density": "1 неделя",
                 "end_time": "13-10-2020",
                 "begin_time": "13-03-2020"
@@ -129,7 +129,7 @@ FLIGHT_SCHEDULE = {
     },
     "Екатеринбург": {
         "Калининград": {
-            "interval": {
+            "interval": {#"рейс раз в две недели"
                 "density": "2 недели",
                 "end_time": None,
                 "begin_time": "02-07-2020"
@@ -138,7 +138,7 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "EKR176"
         },
         "Москва": {
-            "interval": {
+            "interval": {#"рейс раз в два месяца"
                 "density": "2 месяца",
                 "end_time": None,
                 "begin_time": "12-11-2020"
@@ -170,18 +170,18 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "ER141"
         },
         "Санкт-Петербург": {
-            "interval": {
+            "interval": {#"рейс раз в три месяца"
                 "density": "3 месяца",
                 "end_time": None,
                 "begin_time": "15-09-2020"
             },
             "date": None,
-            "name_of_flight": "ESR124"
+            "name_of_flight": "ESPR124"
         }
     },
     "Калининград": {
         "Владивосток": {
-            "interval": {
+            "interval": {#"рейс раз в неделю"
                 "density": "1 неделя",
                 "end_time": None,
                 "begin_time": "07-04-2020"
@@ -211,7 +211,7 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "KM174"
         },
         "Екатеринбург": {
-            "interval": {
+            "interval": {#"рейс раз в две недели"
                 "density": "2 недели",
                 "end_time": "07-10-2020",
                 "begin_time": "07-05-2020"
@@ -222,13 +222,13 @@ FLIGHT_SCHEDULE = {
     },
     "Владивосток": {
         "Санкт-Петербург": {
-            "interval": {
+            "interval": {#"рейс раз в три месяца"
                 "density": "3 месяца",
                 "end_time": None,
                 "begin_time": "03-04-2020"
             },
             "date": None,
-            "name_of_flight": "VSR278"
+            "name_of_flight": "VSPR278"
         },
         "Москва": {
             "interval": {
@@ -246,7 +246,7 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "VM236"
         },
         "Ростов-на-Дону": {
-            "interval": {
+            "interval": {#"рейс раз в две неделю"
                 "density": "2 недели",
                 "end_time": None,
                 "begin_time": "08-12-2020"
@@ -255,7 +255,7 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "VRR248"
         },
         "Калининград": {
-            "interval": {
+            "interval": {#"рейс раз в полгода"
                 "density": "полгода",
                 "end_time": None,
                 "begin_time": "06-09-2020"
@@ -290,13 +290,13 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "SE117"
         },
         "Хабаровск": {
-            "interval": {
+            "interval": {#"рейс раз в два месяца"
                 "density": "2 месяца",
                 "end_time": None,
                 "begin_time": "01-07-2020"
             },
             "date": None,
-            "name_of_flight": "SXR134"
+            "name_of_flight": "SPKh134"
         },
         "Нижний Новгород": {
             "interval": {
@@ -315,7 +315,7 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "SN207"
         },
         "Москва": {
-            "interval": {
+            "interval": {#"рейс раз в месяц"
                 "density": "1 месяц",
                 "end_time": None,
                 "begin_time": "29-11-2021"
@@ -324,7 +324,7 @@ FLIGHT_SCHEDULE = {
             "name_of_flight": "SMR112"
         },
         "Владивосток": {
-            "interval": {
+            "interval": {#"рейс раз в полгода"
                 "density": "полгода",
                 "end_time": None,
                 "begin_time": "25-09-2020"
@@ -335,13 +335,13 @@ FLIGHT_SCHEDULE = {
     },
     "Хабаровск": {
         "Санкт-Петербург": {
-            "interval": {
+            "interval": {#"рейс раз в два месяца"
                 "density": "2 месяца",
                 "end_time": None,
                 "begin_time": "15-03-2020"
             },
             "date": None,
-            "name_of_flight": "XSR237"
+            "name_of_flight": "KhSP237"
         },
         "Нижний Новгород": {
             "interval": {
@@ -380,7 +380,7 @@ FLIGHT_SCHEDULE = {
                      '15-04-2021',
                      '13-04-2021',
                      '08-09-2020'],
-            "name_of_flight": "NS215"
+            "name_of_flight": "NSP215"
         },
         "Хабаровск": {
             "interval": {
@@ -397,7 +397,15 @@ FLIGHT_SCHEDULE = {
                      '20-06-2020',
                      '19-02-2021',
                      '14-05-2020'],
-            "name_of_flight": "NX128"
+            "name_of_flight": "NKh128"
         }
     }
 }
+
+DB_CONFIG = dict(
+    provider='postgres',
+    user='postgres',
+    password='postgres',
+    host='localhost',
+    database='tb_chat_bot'
+)

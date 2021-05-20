@@ -10,7 +10,7 @@ log = logging.getLogger('ChatBot')
 
 
 def check_regular_date(flight_date, future_dates, date, date_end):
-    if flight_date < date < date_end and len(future_dates) < 5:
+    if flight_date <= date < date_end and len(future_dates) < 5:
         future_dates.append(date.strftime('%d-%m-%Y'))
     return future_dates
 
